@@ -13,80 +13,44 @@ https://www.figma.com/proto/KoAfPy5sPq2tAE7sLztIp3/Login-Clinica-veterinaria?nod
 Visualización pantalla para selección de tipo de acceso con el rol de cliente seleccionado:
 https://www.figma.com/proto/KoAfPy5sPq2tAE7sLztIp3/Login-Clinica-veterinaria?node-id=22-204&t=q7tKJTuUtue1Fsto-1
 
-##🏛️Estructura general del proyecto
+## 🏛️ Estructura general del proyecto
+
+```text
 ClinicaVeterinaria/
 │
 ├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/clinicaveterinaria/
-│   │   │       ├── Main.java
-│   │   │       ├── MainApp.java              # Extiende Application (JavaFX)
-│   │   │       │
-│   │   │       ├── modelo/
-│   │   │       │   ├── Cliente.java
-│   │   │       │   ├── Mascota.java
-│   │   │       │   ├── Veterinario.java
-│   │   │       │   ├── Auxiliar.java
-│   │   │       │   ├── Consulta.java
-│   │   │       │   └── Pago.java
-│   │   │       │
-│   │   │       ├── controlador/
-│   │   │       │   ├── LoginControlador.java
-│   │   │       │   ├── ClienteControlador.java
-│   │   │       │   ├── MascotaControlador.java
-│   │   │       │   ├── VeterinarioControlador.java
-│   │   │       │   └── AuxiliarControlador.java
-│   │   │       │
-│   │   │       ├── db/
-│   │   │       │   ├── Conexion.java
-│   │   │       │   ├── ClienteDAO.java
-│   │   │       │   ├── MascotaDAO.java
-│   │   │       │   ├── VeterinarioDAO.java
-│   │   │       │   ├── ConsultaDAO.java
-│   │   │       │   └── PagoDAO.java
-│   │   │       │
-│   │   │       ├── externos/
-│   │   │       │   ├── REIACSimulado.java
-│   │   │       │   └── BancoSimulado.java
-│   │   │       │
-│   │   │       └── utils/
-│   │   │           ├── Encriptador.java
-│   │   │           ├── ValidadorEmail.java
-│   │   │           └── Sesion.java
-│   │   │
-│   │   └── resources/
-│   │       └── com/clinicaveterinaria/
-│   │           ├── vistas/
-│   │           │   ├── login.fxml
-│   │           │   ├── auxiliar/
-│   │           │   │   ├── panel-auxiliar.fxml
-│   │           │   │   ├── lista-clientes.fxml
-│   │           │   │   ├── form-cliente.fxml
-│   │           │   │   ├── lista-mascotas.fxml
-│   │           │   │   └── form-mascota.fxml
-│   │           │   ├── veterinario/
-│   │           │   │   ├── panel-veterinario.fxml
-│   │           │   │   ├── lista-espera.fxml
-│   │           │   │   ├── registrar-consulta.fxml
-│   │           │   │   └── historial-consultas.fxml
-│   │           │   └── cliente/
-│   │           │       ├── panel-cliente.fxml
-│   │           │       ├── mis-mascotas.fxml
-│   │           │       └── pago.fxml
-│   │           │
-│   │           ├── estilos/
-│   │           │   └── estilos.css
-│   │           └── imagenes/
-│   │
-│   └── test/
-│       └── java/
-│           └── com/clinicaveterinaria/
-│               ├── db/
-│               │   └── ConexionTest.java
-│               └── modelo/
-│                   └── ClienteTest.java
-│
+│   └──  main/
+│      ├── java/
+│      │   └── com/clinicaveterinaria/
+│      │       ├── Main.java
+│      │       ├── MainApp.java  # Extiende Application (JavaFX)
+│      │       │
+│      │       ├── modelo/
+│      │       │
+│      │       ├── controlador/
+│      │       ├── db/
+│      │       │
+│      │       ├── externos/
+│      │       └── utils/
+│      └── resources/
+│          └── com/clinicaveterinaria/
+│              ├── vistas/
+│              │   ├── auxiliar/
+│              │   ├── veterinario/
+│              │   └── cliente/
+│              │
+│              ├── estilos/
+│              │   └── estilos.css
+│              └── imagenes/
+│   
 ├── pom.xml
 └── README.md
 
+## 🚀 Tecnologías utilizadas
+- Java
+- JavaFX
+- MySQL (o el que uses)
+- Maven
+
+## 📌 Descripción
+Aplicación de gestión para una clínica veterinaria con módulos de clientes, mascotas, veterinarios y pagos.
