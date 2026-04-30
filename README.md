@@ -16,7 +16,7 @@ https://www.figma.com/proto/KoAfPy5sPq2tAE7sLztIp3/Login-Clinica-veterinaria?nod
 ## 🚀 Tecnologías utilizadas
 - Java
 - JavaFX
-- MySQL (o el que uses)
+- MySQL 
 - Maven
 
 ## 📌 Descripción
