@@ -13,6 +13,15 @@ https://www.figma.com/proto/KoAfPy5sPq2tAE7sLztIp3/Login-Clinica-veterinaria?nod
 Visualización pantalla para selección de tipo de acceso con el rol de cliente seleccionado:
 https://www.figma.com/proto/KoAfPy5sPq2tAE7sLztIp3/Login-Clinica-veterinaria?node-id=22-204&t=q7tKJTuUtue1Fsto-1
 
+## 🚀 Tecnologías utilizadas
+- Java
+- JavaFX
+- MySQL (o el que uses)
+- Maven
+
+## 📌 Descripción
+Aplicación de gestión para una clínica veterinaria con módulos de clientes, mascotas, veterinarios y pagos.
+
 ## 🏛️ Estructura general del proyecto
 
 ```text
@@ -46,11 +55,4 @@ ClinicaVeterinaria/
 ├── pom.xml
 └── README.md
 
-## 🚀 Tecnologías utilizadas
-- Java
-- JavaFX
-- MySQL (o el que uses)
-- Maven
 
-## 📌 Descripción
-Aplicación de gestión para una clínica veterinaria con módulos de clientes, mascotas, veterinarios y pagos.
