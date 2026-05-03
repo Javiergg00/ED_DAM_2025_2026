@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Java 25 -->
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
 
         <!-- JavaFX -->
         <javafx.version>21.0.2</javafx.version>
@@ -46,7 +46,7 @@
                 <version>3.13.0</version>
 
                 <configuration>
-                    <release>25</release>
+                    <release>21</release>
                 </configuration>
             </plugin>
 
