@@ -1,3 +1,5 @@
+package com.model;
+
 public class Mascota {
     private int id;
     private String nombre;

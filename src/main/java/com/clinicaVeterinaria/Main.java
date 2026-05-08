@@ -3,6 +3,7 @@ package com.clinicaVeterinaria;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import com.controller.RecepcionistaController;
 
 public class Main extends Application {
 

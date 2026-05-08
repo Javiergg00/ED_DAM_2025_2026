@@ -1,3 +1,9 @@
+package com.controller;
+
+import com.model.Cliente;
+import com.model.Mascota;
+
+import javafx.collections.FXCollections;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
