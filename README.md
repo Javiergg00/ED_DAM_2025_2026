@@ -32,7 +32,7 @@ ClinicaVeterinaria/
 │      ├── java/
 │      │   └── com/clinicaveterinaria/
 │      │       ├── Main.java
-│      │       ├── MainApp.java  # Extiende Application (JavaFX)
+│      │       ├── Main.java     # Punto de entrada JavaFX
 │      │       │
 │      │       ├── modelo/
 │      │       │
@@ -54,5 +54,4 @@ ClinicaVeterinaria/
 │   
 ├── pom.xml
 └── README.md
-
 
