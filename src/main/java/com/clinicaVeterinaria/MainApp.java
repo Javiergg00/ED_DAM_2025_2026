@@ -7,8 +7,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Clinica Veterinaria");
-        stage.show();
+        new Main().start(stage);
     }
 
     public static void main(String[] args) {
