@@ -1,7 +1,9 @@
 package com.controller;
 
+import com.clinicaVeterinaria.AppNavigator;
 import com.model.Cliente;
 import com.model.Mascota;
+import com.model.SessionUser;
 
 import javafx.collections.FXCollections;
 import javafx.collections.FXCollections;
@@ -19,16 +21,20 @@ import java.util.Optional;
 
 public class RecepcionistaController {
 
-    private Stage stage;
-    private BorderPane root;
+    private final Stage stage;
+    private final AppNavigator navigator;
+    private final SessionUser sessionUser;
+    private final BorderPane root;
 
     private ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
     private int nextIdCliente = 1;
     private int nextIdMascota = 1;
 
-    public RecepcionistaController(Stage stage) {
+    public RecepcionistaController(Stage stage, AppNavigator navigator, SessionUser sessionUser) {
         this.stage = stage;
+        this.navigator = navigator;
+        this.sessionUser = sessionUser;
         root = new BorderPane();
         root.setStyle("-fx-background-color: #f0f4f8;");
         construirVista();
@@ -43,7 +49,18 @@ public class RecepcionistaController {
         titulo.setFont(Font.font("Arial", FontWeight.BOLD, 22));
         titulo.setStyle("-fx-text-fill: #2c3e50;");
 
-        HBox header = new HBox(titulo);
+        Label sessionLabel = new Label(sessionUser.getUsername() + " · " + sessionUser.getRole().getDisplayName());
+        sessionLabel.setStyle("-fx-text-fill: #5b6773; -fx-font-weight: bold;");
+
+        Button logoutButton = new Button("Cerrar sesión");
+        logoutButton.setStyle("-fx-background-color: #d35454; -fx-text-fill: white; -fx-font-weight: bold;");
+        logoutButton.setOnAction(event -> navigator.showLogin());
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox header = new HBox(14, titulo, spacer, sessionLabel, logoutButton);
+        header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(20));
         header.setStyle("-fx-background-color: #ffffff; -fx-border-color: #dce1e7; -fx-border-width: 0 0 1 0;");
 

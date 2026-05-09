@@ -1,19 +1,14 @@
 package com.clinicaVeterinaria;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import com.controller.RecepcionistaController;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        RecepcionistaController controller = new RecepcionistaController(primaryStage);
-        Scene scene = new Scene(controller.getView(), 900, 650);
-        primaryStage.setTitle("Clínica Veterinaria - Recepcionista");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        AppNavigator navigator = new AppNavigator(primaryStage);
+        navigator.showLogin();
     }
 
     public static void main(String[] args) {
