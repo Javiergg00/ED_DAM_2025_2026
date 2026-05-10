@@ -158,4 +158,89 @@ public class ClienteController {
         card.setStyle(cardStyle());
         return card;
     }
+
+    private VBox buildPanelDatos() {
+        Label titulo = sectionTitle("👤 Mis Datos Personales");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(20);
+        grid.setVgap(12);
+        grid.setPadding(new Insets(20));
+        grid.setStyle(cardStyle());
+
+        addFilaDatos(grid, "Nombre:",    clienteActual.getNombre() + " " + clienteActual.getApellido(), 0);
+        addFilaDatos(grid, "Email:",     clienteActual.getEmail(),     1);
+        addFilaDatos(grid, "Teléfono:",  clienteActual.getTelefono(),  2);
+        addFilaDatos(grid, "Dirección:", clienteActual.getDireccion(), 3);
+
+        Button btnEditar = new Button("✏️  Editar datos");
+        btnEditar.setStyle(
+                "-fx-background-color: #1a3a5c; -fx-text-fill: white;" +
+                        "-fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"
+        );
+        btnEditar.setOnAction(e -> abrirDialogoEdicion());
+
+        VBox panel = new VBox(20, titulo, grid, btnEditar);
+        panel.setVisible(false);
+        panel.setManaged(false);
+        return panel;
+    }
+
+    private void addFilaDatos(GridPane grid, String etiqueta, String valor, int fila) {
+        Label lbl = new Label(etiqueta);
+        lbl.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+        lbl.setStyle("-fx-text-fill: #555;");
+
+        Label val = new Label(valor != null ? valor : "—");
+        val.setStyle("-fx-text-fill: #1a3a5c; -fx-font-size: 13;");
+
+        grid.add(lbl, 0, fila);
+        grid.add(val, 1, fila);
+    }
+
+    private void abrirDialogoEdicion() {
+        // TODO: conectar con UPDATE usuarios SET ... WHERE id = ID_CLIENTE_SESION
+        TextField fNombre    = new TextField(clienteActual.getNombre());
+        TextField fApellido  = new TextField(clienteActual.getApellido());
+        TextField fTelefono  = new TextField(clienteActual.getTelefono());
+        TextField fEmail     = new TextField(clienteActual.getEmail());
+        TextField fDireccion = new TextField(clienteActual.getDireccion());
+
+        GridPane form = new GridPane();
+        form.setHgap(12); form.setVgap(10); form.setPadding(new Insets(16));
+        addFilaForm(form, "Nombre:",    fNombre,    0);
+        addFilaForm(form, "Apellido:",  fApellido,  1);
+        addFilaForm(form, "Teléfono:",  fTelefono,  2);
+        addFilaForm(form, "Email:",     fEmail,     3);
+        addFilaForm(form, "Dirección:", fDireccion, 4);
+
+        Dialog<ButtonType> dlg = new Dialog<>();
+        dlg.setTitle("Editar datos personales");
+        dlg.setHeaderText("Modifica tus datos");
+        dlg.getDialogPane().setContent(form);
+        dlg.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        dlg.showAndWait().ifPresent(bt -> {
+            if (bt == ButtonType.OK) {
+                // Actualizar objeto en memoria (y BD cuando esté conectada)
+                clienteActual.setNombre(fNombre.getText().trim());
+                clienteActual.setApellido(fApellido.getText().trim());
+                clienteActual.setTelefono(fTelefono.getText().trim());
+                clienteActual.setEmail(fEmail.getText().trim());
+                clienteActual.setDireccion(fDireccion.getText().trim());
+
+                // Refrescar vista de datos
+                VBox nuevoPanelDatos = buildPanelDatos();
+                nuevoPanelDatos.setVisible(true);
+                nuevoPanelDatos.setManaged(true);
+                panelDatos.getChildren().setAll(nuevoPanelDatos.getChildren());
+            }
+        });
+    }
+
+    private void addFilaForm(GridPane grid, String label, TextField field, int fila) {
+        grid.add(new Label(label), 0, fila);
+        grid.add(field, 1, fila);
+        GridPane.setHgrow(field, Priority.ALWAYS);
+    }
 }
