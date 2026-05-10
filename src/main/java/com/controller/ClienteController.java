@@ -243,4 +243,64 @@ public class ClienteController {
         grid.add(field, 1, fila);
         GridPane.setHgrow(field, Priority.ALWAYS);
     }
+
+    private Label sectionTitle(String texto) {
+        Label l = new Label(texto);
+        l.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        l.setStyle("-fx-text-fill: #1a3a5c;");
+        return l;
+    }
+
+    private Label bold(String texto, int size) {
+        Label l = new Label(texto);
+        l.setFont(Font.font("Arial", FontWeight.BOLD, size));
+        l.setStyle("-fx-text-fill: #1a3a5c;");
+        return l;
+    }
+
+    private Label small(String texto) {
+        Label l = new Label(texto);
+        l.setFont(Font.font("Arial", 12));
+        l.setStyle("-fx-text-fill: #666;");
+        l.setWrapText(true);
+        return l;
+    }
+
+    private Label infoLabel(String texto) {
+        Label l = new Label(texto);
+        l.setStyle("-fx-text-fill: #999; -fx-font-style: italic;");
+        return l;
+    }
+
+    /** colors = "bgColor;textColor" */
+    private Label badge(String texto, String colors) {
+        String[] c = colors.split(";");
+        Label l = new Label(texto);
+        l.setStyle(
+                "-fx-background-color: " + c[0] + "; -fx-text-fill: " + c[1] + ";" +
+                        "-fx-background-radius: 12; -fx-padding: 2 10; -fx-font-size: 11;"
+        );
+        return l;
+    }
+
+    private ScrollPane scrollTransparente(javafx.scene.Node contenido) {
+        ScrollPane sp = new ScrollPane(contenido);
+        sp.setFitToWidth(true);
+        sp.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        return sp;
+    }
+
+    private String cardStyle() {
+        return "-fx-background-color: white;" +
+                "-fx-background-radius: 10;" +
+                "-fx-border-color: #e7dfcb;" +
+                "-fx-border-radius: 10;" +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2);";
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+}
 }

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc53364a-b7a7-457d-b090-905e46eae538" name="Changes" comment="Función de obtener consultas con el pago pendiente" />
+    <list default="true" id="dc53364a-b7a7-457d-b090-905e46eae538" name="Changes" comment="Panel de datos personales" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,7 +95,23 @@
       <option name="project" value="LOCAL" />
       <updated>1778433671634</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Panel de citas">
+      <option name="closed" value="true" />
+      <created>1778434221631</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1778434221631</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Panel de datos personales">
+      <option name="closed" value="true" />
+      <created>1778434268570</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1778434268570</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +122,8 @@
     <MESSAGE value="Funcion de buscar mascotas" />
     <MESSAGE value="Función de obtener consultas" />
     <MESSAGE value="Función de obtener consultas con el pago pendiente" />
-    <option name="LAST_COMMIT_MESSAGE" value="Función de obtener consultas con el pago pendiente" />
+    <MESSAGE value="Panel de citas" />
+    <MESSAGE value="Panel de datos personales" />
+    <option name="LAST_COMMIT_MESSAGE" value="Panel de datos personales" />
   </component>
 </project>
