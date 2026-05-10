@@ -70,4 +70,32 @@ public class ClienteController {
         root.setCenter(buildContent());
         root.setStyle("-fx-background-color: #fbfaf5;");
     }
+
+    private HBox buildHeader() {
+        Label title = new Label("Portal del Cliente");
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        title.setStyle("-fx-text-fill: #1a3a5c;");
+
+        Label user = new Label(sessionUser.getUsername() + "  ·  " + sessionUser.getRole().getDisplayName());
+        user.setStyle("-fx-text-fill: #555; -fx-font-size: 13;");
+
+        Button logout = new Button("Cerrar sesión");
+        logout.setStyle(
+                "-fx-background-color: #e8f0fe; -fx-text-fill: #1a3a5c;" +
+                        "-fx-background-radius: 6; -fx-border-radius: 6; -fx-cursor: hand;"
+        );
+        logout.setOnAction(e -> navigator.showLogin());
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox header = new HBox(16, title, spacer, user, logout);
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.setPadding(new Insets(16, 24, 16, 24));
+        header.setStyle(
+                "-fx-background-color: white;" +
+                        "-fx-border-color: #e7dfcb; -fx-border-width: 0 0 1 0;"
+        );
+        return header;
+    }
 }
