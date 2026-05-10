@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc53364a-b7a7-457d-b090-905e46eae538" name="Changes" comment="Primer comit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/controller/ClienteController.java" afterDir="false" />
-    </list>
+    <list default="true" id="dc53364a-b7a7-457d-b090-905e46eae538" name="Changes" comment="Función de obtener consultas con el pago pendiente" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,7 +71,31 @@
       <option name="project" value="LOCAL" />
       <updated>1778432832265</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Funcion de buscar mascotas">
+      <option name="closed" value="true" />
+      <created>1778433556998</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778433556998</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Función de obtener consultas">
+      <option name="closed" value="true" />
+      <created>1778433638430</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778433638430</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Función de obtener consultas con el pago pendiente">
+      <option name="closed" value="true" />
+      <created>1778433671634</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778433671634</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,6 +103,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Primer comit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Primer comit" />
+    <MESSAGE value="Funcion de buscar mascotas" />
+    <MESSAGE value="Función de obtener consultas" />
+    <MESSAGE value="Función de obtener consultas con el pago pendiente" />
+    <option name="LAST_COMMIT_MESSAGE" value="Función de obtener consultas con el pago pendiente" />
   </component>
 </project>

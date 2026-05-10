@@ -98,78 +98,64 @@ public class ClienteController {
         );
         return header;
     }
+    private VBox buildPanelCitas() {
+        Label titulo = sectionTitle("📅 Mis Citas");
 
-    public static List<Mascota> getMascotasByCliente(String idCliente) {
-        List<Mascota> lista = new ArrayList<>();
-        String sql = "SELECT * FROM mascotas WHERE id_cliente = ?";
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, idCliente);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                lista.add(new Mascota(
-                        rs.getString("id_mascota"),
-                        rs.getString("id_cliente"),
-                        rs.getString("nombre"),
-                        rs.getString("especie"),
-                        rs.getString("raza"),
-                        rs.getInt("edad"),
-                        rs.getDouble("peso"),
-                        rs.getString("estado"),
-                        rs.getString("fecha_registro")
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println("[DB] Error getMascotas: " + e.getMessage());
-        }
-        return lista;
-    }
-
-    public static List<Consulta> getConsultas(String idCliente,
-                                              String filtroEstado,
-                                              String filtroEstadoPago,
-                                              String idMascota,
-                                              String busqueda) {
-        List<Consulta> lista = new ArrayList<>();
-        StringBuilder sql = new StringBuilder(
-                "SELECT * FROM consultas WHERE id_cliente = ?"
+        VBox lista = new VBox(12);
+        lista.getChildren().addAll(
+                buildCardCita("Consulta General",       "2026-04-18", "completada", "Dr. García",    "50,00 €", "pagado"),
+                buildCardCita("Análisis Laboratorio",   "2026-04-19", "en_proceso", "Dr. Rodríguez", "85,00 €", "pendiente"),
+                buildCardCita("Consulta Especializada", "2026-04-20", "pendiente",  "Dr. Martínez",  "120,00 €","pendiente")
         );
-        List<Object> params = new ArrayList<>();
-        params.add(idCliente);
 
-        if (filtroEstado != null && !filtroEstado.equals("todos")) {
-            sql.append(" AND estado = ?");
-            params.add(filtroEstado);
-        }
-        if (filtroEstadoPago != null && !filtroEstadoPago.equals("todos")) {
-            sql.append(" AND estado_pago = ?");
-            params.add(filtroEstadoPago);
-        }
-        if (idMascota != null && !idMascota.isEmpty()) {
-            sql.append(" AND id_mascota = ?");
-            params.add(idMascota);
-        }
-        if (busqueda != null && !busqueda.isEmpty()) {
-            sql.append(" AND (titulo LIKE ? OR id_consulta LIKE ? OR descripcion LIKE ?)");
-            String like = "%" + busqueda + "%";
-            params.add(like); params.add(like); params.add(like);
-        }
-        sql.append(" ORDER BY fecha DESC");
+        Button btnNueva = new Button("+ Pedir nueva cita");
+        btnNueva.setStyle(
+                "-fx-background-color: #1a3a5c; -fx-text-fill: white;" +
+                        "-fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"
+        );
+        btnNueva.setOnAction(e ->
+                // TODO: abrir formulario de solicitud de cita (INSERT en BD)
+                new Alert(Alert.AlertType.INFORMATION,
+                        "Solicitud de cita próximamente disponible.",
+                        ButtonType.OK).showAndWait()
+        );
 
-        try (Connection con = ConexionDB.conectar();
-             PreparedStatement ps = con.prepareStatement(sql.toString())) {
-            for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                lista.add(mapConsulta(rs));
-            }
-        } catch (SQLException e) {
-            System.out.println("[DB] Error getConsultas: " + e.getMessage());
-        }
-        return lista;
-    }
-    public static List<Consulta> getConsultasPendientesPago(String idCliente) {
-        return getConsultas(idCliente, null, "pendiente", null, null);
+        ScrollPane scroll = scrollTransparente(lista);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+
+        VBox panel = new VBox(16, titulo, btnNueva, scroll);
+        panel.setVisible(false);
+        panel.setManaged(false);
+        return panel;
     }
 
+    private VBox buildCardCita(String titulo, String fecha, String estado,
+                               String profesional, String monto, String pago) {
+        Label tituloLbl = bold(titulo, 14);
+        Label fechaLbl  = small("Fecha: " + fecha + "  ·  " + profesional);
+        Label montoLbl  = small("Importe: " + monto);
+
+        Label badgeEstado = badge(
+                capitalize(estado.replace("_", " ")),
+                switch (estado) {
+                    case "completada" -> "#d4edda;#155724";
+                    case "en_proceso" -> "#fff3cd;#856404";
+                    case "pendiente"  -> "#cce5ff;#004085";
+                    case "cancelada"  -> "#e2e3e5;#383d41";
+                    default           -> "#e2e3e5;#383d41";
+                }
+        );
+        Label badgePago = badge(
+                pago.equals("pagado") ? "Pagado" : "Pago pendiente",
+                pago.equals("pagado") ? "#d4edda;#155724" : "#fff3cd;#856404"
+        );
+
+        HBox cabecera = new HBox(10, tituloLbl, badgeEstado, badgePago);
+        cabecera.setAlignment(Pos.CENTER_LEFT);
+
+        VBox card = new VBox(5, cabecera, fechaLbl, montoLbl);
+        card.setPadding(new Insets(14));
+        card.setStyle(cardStyle());
+        return card;
+    }
 }
