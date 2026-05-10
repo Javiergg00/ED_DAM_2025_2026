@@ -25,9 +25,9 @@ public class ClienteController {
     // ── Datos de ejemplo — sustituir por consulta a BD cuando esté lista ──
     // SELECT * FROM mascotas WHERE idCliente = ID_CLIENTE_SESION
     private final List<Mascota> todasLasMascotas = new ArrayList<>(List.of(
-            new Mascota(1, "Max",   "Perro", "Golden Retriever", 5, 1),
-            new Mascota(2, "Luna",  "Gato",  "Siamés",           3, 1),
-            new Mascota(3, "Rocky", "Perro", "Bulldog",          7, 1)
+            new Mascota(1, "Max", "Perro", "Golden Retriever", 5, 1),
+            new Mascota(2, "Luna", "Gato", "Siamés", 3, 1),
+            new Mascota(3, "Rocky", "Perro", "Bulldog", 7, 1)
     ));
 
     // ID del cliente logueado — simulado a 1 hasta conectar con BD
@@ -51,3 +51,16 @@ public class ClienteController {
     private Button btnMascotas;
     private Button btnCitas;
     private Button btnDatos;
+
+    public ClienteController(AppNavigator navigator, SessionUser sessionUser) {
+        this.navigator   = navigator;
+        this.sessionUser = sessionUser;
+        this.root        = new BorderPane();
+        buildView();
+        mostrarSeccion("mascotas");
+    }
+
+    public Parent getView() {
+        return root;
+    }
+}
