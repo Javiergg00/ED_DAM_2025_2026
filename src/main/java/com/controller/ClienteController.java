@@ -98,4 +98,32 @@ public class ClienteController {
         );
         return header;
     }
+
+    public static List<Mascota> getMascotasByCliente(String idCliente) {
+        List<Mascota> lista = new ArrayList<>();
+        String sql = "SELECT * FROM mascotas WHERE id_cliente = ?";
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, idCliente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(new Mascota(
+                        rs.getString("id_mascota"),
+                        rs.getString("id_cliente"),
+                        rs.getString("nombre"),
+                        rs.getString("especie"),
+                        rs.getString("raza"),
+                        rs.getInt("edad"),
+                        rs.getDouble("peso"),
+                        rs.getString("estado"),
+                        rs.getString("fecha_registro")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println("[DB] Error getMascotas: " + e.getMessage());
+        }
+        return lista;
+    }
+
+
 }
