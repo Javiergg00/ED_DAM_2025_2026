@@ -51,7 +51,7 @@ public class ClienteController {
     private Button btnMascotas;
     private Button btnCitas;
     private Button btnDatos;
-
+    
     public ClienteController(AppNavigator navigator, SessionUser sessionUser) {
         this.navigator   = navigator;
         this.sessionUser = sessionUser;
@@ -62,5 +62,12 @@ public class ClienteController {
 
     public Parent getView() {
         return root;
+    }
+
+    private void buildView() {
+        root.setTop(buildHeader());
+        root.setLeft(buildSidebar());
+        root.setCenter(buildContent());
+        root.setStyle("-fx-background-color: #fbfaf5;");
     }
 }
