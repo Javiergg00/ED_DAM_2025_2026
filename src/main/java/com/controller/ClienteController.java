@@ -168,5 +168,8 @@ public class ClienteController {
         }
         return lista;
     }
+    public static List<Consulta> getConsultasPendientesPago(String idCliente) {
+        return getConsultas(idCliente, null, "pendiente", null, null);
+    }
 
 }
