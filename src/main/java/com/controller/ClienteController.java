@@ -125,5 +125,48 @@ public class ClienteController {
         return lista;
     }
 
+    public static List<Consulta> getConsultas(String idCliente,
+                                              String filtroEstado,
+                                              String filtroEstadoPago,
+                                              String idMascota,
+                                              String busqueda) {
+        List<Consulta> lista = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+                "SELECT * FROM consultas WHERE id_cliente = ?"
+        );
+        List<Object> params = new ArrayList<>();
+        params.add(idCliente);
+
+        if (filtroEstado != null && !filtroEstado.equals("todos")) {
+            sql.append(" AND estado = ?");
+            params.add(filtroEstado);
+        }
+        if (filtroEstadoPago != null && !filtroEstadoPago.equals("todos")) {
+            sql.append(" AND estado_pago = ?");
+            params.add(filtroEstadoPago);
+        }
+        if (idMascota != null && !idMascota.isEmpty()) {
+            sql.append(" AND id_mascota = ?");
+            params.add(idMascota);
+        }
+        if (busqueda != null && !busqueda.isEmpty()) {
+            sql.append(" AND (titulo LIKE ? OR id_consulta LIKE ? OR descripcion LIKE ?)");
+            String like = "%" + busqueda + "%";
+            params.add(like); params.add(like); params.add(like);
+        }
+        sql.append(" ORDER BY fecha DESC");
+
+        try (Connection con = ConexionDB.conectar();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(mapConsulta(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println("[DB] Error getConsultas: " + e.getMessage());
+        }
+        return lista;
+    }
 
 }
