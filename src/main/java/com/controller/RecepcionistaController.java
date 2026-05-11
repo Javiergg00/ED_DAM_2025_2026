@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
 public class RecepcionistaController {
 
     private final Stage stage;
@@ -242,7 +246,7 @@ public class RecepcionistaController {
         grid.addRow(4, new Label("Dirección:"), fDireccion);
 
         dialog.getDialogPane().setContent(grid);
-        dialog.setResultConverter(btn -> btn == btnGuardar);
+        dialog.setResultConverter(btn -> (Boolean) (btn == btnGuardar));
 
         dialog.showAndWait().ifPresent(ok -> {
             if (ok) {
@@ -355,7 +359,7 @@ public class RecepcionistaController {
         grid.addRow(3, new Label("Edad:"),    fEdad);
 
         dialog.getDialogPane().setContent(grid);
-        dialog.setResultConverter(btn -> btn == btnGuardar);
+        dialog.setResultConverter(btn -> (Boolean) (btn == btnGuardar));
 
         dialog.showAndWait().ifPresent(ok -> {
             if (ok) {
@@ -456,5 +460,49 @@ public class RecepcionistaController {
 
     private void info(String mensaje) {
         new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK).showAndWait();
+    }
+
+    // --- CONFIGURACIÓN DE CONEXIÓN ---
+    private final String DB_URL = "jdbc:mysql://localhost:3306/clinica_entornos";
+    private final String DB_USER = "root";
+    private final String DB_PASS = ""; // Cambia si pusiste contraseña en XAMPP
+
+    // --- MÉTODO PARA LA TABLA 'usuarios' ---
+    private void conectarYGuardarCliente(String nombre, String apellidos, String dni) {
+        String sql = "INSERT INTO usuarios (nombre, apellidos, dni) VALUES (?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, apellidos);
+            pstmt.setString(3, dni);
+
+            pstmt.executeUpdate();
+            System.out.println("BBDD: Usuario guardado con éxito.");
+
+        } catch (Exception e) {
+            System.err.println("Error al guardar usuario: " + e.getMessage());
+        }
+    }
+
+    // --- MÉTODO PARA LA TABLA 'animales' ---
+    private void conectarYGuardarAnimal(String nombre) {
+        String sql = "INSERT INTO animales (nombre, estado, sintomas, receta) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, "Estable");  // Valor por defecto para la columna 'estado'
+            pstmt.setString(3, "Ninguno");  // Valor por defecto para 'sintomas'
+            pstmt.setString(4, "Ninguna");  // Valor por defecto para 'receta'
+
+            pstmt.executeUpdate();
+            System.out.println("BBDD: Animal registrado con éxito.");
+
+        } catch (Exception e) {
+            System.err.println("Error al guardar animal: " + e.getMessage());
+        }
     }
 }
