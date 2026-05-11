@@ -18,6 +18,14 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Optional;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class RecepcionistaController {
 
@@ -30,6 +38,14 @@ public class RecepcionistaController {
     private ObservableList<Mascota> listaMascotas = FXCollections.observableArrayList();
     private int nextIdCliente = 1;
     private int nextIdMascota = 1;
+    private static final String API_URL =
+            "https://api.reiac.es/verificar"; //Aqui hay que poner la api
+
+    private final HttpClient client =
+            HttpClient.newHttpClient();
+
+    private final ObjectMapper mapper =
+            new ObjectMapper();
 
     public RecepcionistaController(Stage stage, AppNavigator navigator, SessionUser sessionUser) {
         this.stage = stage;
@@ -242,7 +258,7 @@ public class RecepcionistaController {
         grid.addRow(4, new Label("Dirección:"), fDireccion);
 
         dialog.getDialogPane().setContent(grid);
-        dialog.setResultConverter(btn -> btn == btnGuardar);
+        dialog.setResultConverter(btn -> (Boolean) (btn == btnGuardar));
 
         dialog.showAndWait().ifPresent(ok -> {
             if (ok) {
@@ -355,7 +371,7 @@ public class RecepcionistaController {
         grid.addRow(3, new Label("Edad:"),    fEdad);
 
         dialog.getDialogPane().setContent(grid);
-        dialog.setResultConverter(btn -> btn == btnGuardar);
+        dialog.setResultConverter(btn -> (Boolean) (btn == btnGuardar));
 
         dialog.showAndWait().ifPresent(ok -> {
             if (ok) {
@@ -402,20 +418,65 @@ public class RecepcionistaController {
     }
 
     private void verificarREIAC(Mascota mascota) {
-        if (mascota == null) { alerta("Selecciona una mascota."); return; }
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
-                mascota.getNombre() + " está actualmente " +
-                (mascota.isEnREIAC() ? "registrada" : "NO registrada") + " en REIAC.\n¿Cambiar estado?",
-                ButtonType.YES, ButtonType.NO);
-        confirm.setTitle("Verificar REIAC");
-        confirm.showAndWait().ifPresent(btn -> {
-            if (btn == ButtonType.YES) {
-                mascota.setEnREIAC(!mascota.isEnREIAC());
-                listaMascotas.set(listaMascotas.indexOf(mascota), mascota);
-                info("Estado REIAC: " + (mascota.isEnREIAC() ? "Registrada" : "No registrada"));
+        if (mascota == null) {
+            alerta("Selecciona una mascota.");
+            return;
+        }
+
+        try {
+
+            HttpRequest request =
+                    HttpRequest.newBuilder()
+                            .uri(
+                                    URI.create(
+                                            API_URL + "/" + mascota.getId()
+                                    )
+                            )
+                            .GET()
+                            .build();
+
+            HttpResponse<String> response =
+                    client.send(
+                            request,
+                            HttpResponse.BodyHandlers.ofString()
+                    );
+
+            if (response.statusCode() == 200) {
+
+                JsonNode json =
+                        mapper.readTree(response.body());
+
+                boolean registrada =
+                        json.get("registrada").asBoolean();
+
+                mascota.setEnREIAC(registrada);
+
+                listaMascotas.set(
+                        listaMascotas.indexOf(mascota),
+                        mascota
+                );
+
+                info(
+                        registrada
+                                ? "La mascota está registrada en REIAC."
+                                : "La mascota NO está registrada en REIAC."
+                );
+
+            } else {
+
+                alerta(
+                        "Error en la API. Código: "
+                                + response.statusCode()
+                );
             }
-        });
+
+        } catch (IOException | InterruptedException e) {
+
+            alerta("No se pudo conectar con REIAC.");
+
+            e.printStackTrace();
+        }
     }
 
     private void asignarVeterinario(Mascota mascota) {
@@ -458,3 +519,4 @@ public class RecepcionistaController {
         new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK).showAndWait();
     }
 }
+
