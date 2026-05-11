@@ -302,4 +302,124 @@ public class ClienteController {
         if (s == null || s.isEmpty()) return s;
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
+    // ─────────────────────────────────────────────
+    // BARRA LATERAL
+    // ─────────────────────────────────────────────
+
+    private VBox buildSidebar() {
+        btnMascotas = sidebarButton("🐾  Mis Mascotas", "mascotas");
+        btnCitas    = sidebarButton("📅  Mis Citas",    "citas");
+        btnDatos    = sidebarButton("👤  Mis Datos",    "datos");
+
+        VBox sidebar = new VBox(8, btnMascotas, btnCitas, btnDatos);
+        sidebar.setPadding(new Insets(24, 12, 24, 12));
+        sidebar.setPrefWidth(190);
+        sidebar.setStyle(
+                "-fx-background-color: #1a3a5c;" +
+                        "-fx-border-color: #e7dfcb; -fx-border-width: 0 1 0 0;"
+        );
+        return sidebar;
+    }
+
+    private Button sidebarButton(String texto, String seccion) {
+        Button btn = new Button(texto);
+        btn.setMaxWidth(Double.MAX_VALUE);
+        btn.setAlignment(Pos.CENTER_LEFT);
+        btn.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
+        styleInactivo(btn);
+        btn.setOnAction(e -> mostrarSeccion(seccion));
+        return btn;
+    }
+
+    private void styleActivo(Button btn) {
+        btn.setStyle(
+                "-fx-background-color: #e8f0fe; -fx-text-fill: #1a3a5c;" +
+                        "-fx-background-radius: 8; -fx-border-radius: 8;" +
+                        "-fx-padding: 10 14; -fx-cursor: hand; -fx-font-weight: bold;"
+        );
+    }
+
+    private void styleInactivo(Button btn) {
+        btn.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #c8d8ec;" +
+                        "-fx-background-radius: 8; -fx-border-radius: 8;" +
+                        "-fx-padding: 10 14; -fx-cursor: hand;"
+        );
+    }
+
+    // ─────────────────────────────────────────────
+    // CONTENIDO CENTRAL
+    // ─────────────────────────────────────────────
+
+    private StackPane buildContent() {
+        panelMascotas = buildPanelMascotas();
+        panelCitas    = buildPanelCitas();
+        panelDatos    = buildPanelDatos();
+
+        StackPane stack = new StackPane(panelMascotas, panelCitas, panelDatos);
+        stack.setPadding(new Insets(24));
+        StackPane.setAlignment(panelMascotas, Pos.TOP_LEFT);
+        StackPane.setAlignment(panelCitas,    Pos.TOP_LEFT);
+        StackPane.setAlignment(panelDatos,    Pos.TOP_LEFT);
+        return stack;
+    }
+
+    private void mostrarSeccion(String seccion) {
+        panelMascotas.setVisible(false); panelMascotas.setManaged(false);
+        panelCitas.setVisible(false);    panelCitas.setManaged(false);
+        panelDatos.setVisible(false);    panelDatos.setManaged(false);
+
+        styleInactivo(btnMascotas);
+        styleInactivo(btnCitas);
+        styleInactivo(btnDatos);
+
+        switch (seccion) {
+            case "mascotas" -> { panelMascotas.setVisible(true); panelMascotas.setManaged(true); styleActivo(btnMascotas); }
+            case "citas"    -> { panelCitas.setVisible(true);    panelCitas.setManaged(true);    styleActivo(btnCitas); }
+            case "datos"    -> { panelDatos.setVisible(true);    panelDatos.setManaged(true);    styleActivo(btnDatos); }
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // PANEL: MIS MASCOTAS
+    // Filtra por idCliente == ID_CLIENTE_SESION
+    // TODO: reemplazar lista estática por consulta JDBC a tabla mascotas
+    // ─────────────────────────────────────────────
+
+    private VBox buildPanelMascotas() {
+        Label titulo = sectionTitle("🐾 Mis Mascotas");
+
+        List<Mascota> misMascotas = todasLasMascotas.stream()
+                .filter(m -> m.getIdCliente() == ID_CLIENTE_SESION)
+                .collect(Collectors.toList());
+
+        VBox lista = new VBox(12);
+        if (misMascotas.isEmpty()) {
+            lista.getChildren().add(infoLabel("No tienes mascotas registradas."));
+        } else {
+            for (Mascota m : misMascotas) {
+                lista.getChildren().add(buildCardMascota(m));
+            }
+        }
+
+        ScrollPane scroll = scrollTransparente(lista);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+
+        VBox panel = new VBox(16, titulo, scroll);
+        panel.setVisible(false);
+        panel.setManaged(false);
+        return panel;
+    }
+
+    private VBox buildCardMascota(Mascota m) {
+        Label nombre  = bold(m.getNombre(), 15);
+        Label detalle = small(m.getEspecie() + " · " + m.getRaza() + " · " + m.getEdad() + " años");
+        Label vet     = small("Veterinario: " + m.getVeterinario());
+        Label reiac   = small("En REIAC: " + (m.isEnREIAC() ? "✅ Sí" : "❌ No"));
+
+        VBox card = new VBox(5, nombre, detalle, vet, reiac);
+        card.setPadding(new Insets(16));
+        card.setStyle(cardStyle());
+        return card;
+    }
 }
