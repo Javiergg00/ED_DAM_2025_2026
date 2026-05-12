@@ -5,6 +5,9 @@ public class Mascota {
     private String nombre;
     private String especie;
     private String raza;
+    private String estado;
+    private String sintomas;
+    private String receta;
     private int edad;
     private int idCliente;
     private String veterinario;
