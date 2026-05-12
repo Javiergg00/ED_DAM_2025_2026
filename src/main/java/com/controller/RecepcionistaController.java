@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import com.db.DatabaseConnection;
+
 public class RecepcionistaController {
 
     private final Stage stage;
@@ -456,5 +460,40 @@ public class RecepcionistaController {
 
     private void info(String mensaje) {
         new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK).showAndWait();
+
+    }
+
+    private void actualizarMascotaBD(Mascota mascota) {
+
+        String sql = """
+        UPDATE mascotas
+        SET nombre = ?,
+            especie = ?,
+            raza = ?,
+            edad = ?
+        WHERE id = ?
+    """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, mascota.getNombre());
+            stmt.setString(2, mascota.getEspecie());
+            stmt.setString(3, mascota.getRaza());
+            stmt.setInt(4, mascota.getEdad());
+            stmt.setInt(5, mascota.getId());
+
+            int filas = stmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Mascota actualizada en BD");
+            } else {
+                System.out.println("No se encontró la mascota");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta("Error actualizando mascota en BD");
+        }
     }
 }
