@@ -415,15 +415,15 @@ public class VeterinarioController {
         patientData.setPadding(new Insets(8, 0, 8, 0));
 
         patientData.add(styledLabel("Paciente:"), 0, 0);
-        TextField pacienteField = styledTextField(nombrePaciente != null ? nombrePaciente : "Luna", "Nombre del paciente");
+        TextField pacienteField = styledTextField(nombrePaciente != null ? nombrePaciente : "", "Nombre del paciente");
         patientData.add(pacienteField, 1, 0);
 
         patientData.add(styledLabel("Dueño:"), 0, 1);
-        TextField duenoField = styledTextField(dueno != null ? dueno : "María González", "Nombre del dueño");
+        TextField duenoField = styledTextField(dueno != null ? dueno : "", "Nombre del dueño");
         patientData.add(duenoField, 1, 1);
 
         patientData.add(styledLabel("Especie:"), 0, 2);
-        TextField especieField = styledTextField(especie != null ? especie : "Gato", "Especie / Raza");
+        TextField especieField = styledTextField(especie != null ? especie : "", "Especie / Raza");
         patientData.add(especieField, 1, 2);
 
         // Diagnóstico
