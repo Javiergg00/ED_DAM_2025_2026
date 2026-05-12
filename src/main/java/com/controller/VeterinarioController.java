@@ -64,7 +64,7 @@ public class VeterinarioController {
         heartIcon.setStyle("-fx-text-fill: #2563eb; -fx-font-size: 20;");
         iconBox.getChildren().add(heartIcon);
         //Nombre de la app
-        Label title = new Label("VerCare");
+        Label title = new Label("VetCare");
         title.setFont(Font.font("Segoe UI", FontWeight.BOLD, 18));
         title.setStyle("-fx-text-fill: #111827;");
         Label subtitle = new Label("Dr. jht");
