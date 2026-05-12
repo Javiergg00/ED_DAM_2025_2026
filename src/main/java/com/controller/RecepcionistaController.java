@@ -154,6 +154,15 @@ public class RecepcionistaController {
         TableColumn<Mascota, Boolean> colREIAC = new TableColumn<>("REIAC");
         colREIAC.setCellValueFactory(new PropertyValueFactory<>("enREIAC"));
 
+        TableColumn<Mascota, String> colEstado = new TableColumn<>("Estado");
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        TableColumn<Mascota, String> colSintomas = new TableColumn<>("Síntomas");
+        colSintomas.setCellValueFactory(new PropertyValueFactory<>("sintomas"));
+
+        TableColumn<Mascota, String> colReceta = new TableColumn<>("Receta");
+        colReceta.setCellValueFactory(new PropertyValueFactory<>("receta"));
+
         tabla.getColumns().addAll(colId, colNombre, colEspecie, colRaza, colEdad, colCliente, colVet, colREIAC);
 
         Button btnRegistrar   = boton("➕ Registrar mascota",    "#27ae60");
