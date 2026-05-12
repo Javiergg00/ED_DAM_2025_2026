@@ -369,6 +369,9 @@ public class RecepcionistaController {
                 try { mascota.setEdad(Integer.parseInt(fEdad.getText())); } catch (Exception ignored) {}
                 listaMascotas.set(listaMascotas.indexOf(mascota), mascota);
                 info("Mascota modificada correctamente.");
+
+                actualizarMascotaBD(mascota);
+
             }
         });
     }
