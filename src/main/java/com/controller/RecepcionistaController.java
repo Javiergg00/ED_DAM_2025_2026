@@ -354,8 +354,21 @@ public class RecepcionistaController {
         });
 
         dialog.showAndWait().ifPresent(m -> {
-            listaMascotas.add(m);
-            info("Mascota registrada con ID " + m.getId());
+
+            MascotaDAO dao = new MascotaDAO();
+
+            boolean insertada = dao.insertarMascota(m);
+
+            if (insertada) {
+
+                listaMascotas.add(m);
+
+                info("Mascota registrada correctamente en la base de datos.");
+
+            } else {
+
+                alerta("Error al registrar mascota.");
+            }
         });
     }
 
