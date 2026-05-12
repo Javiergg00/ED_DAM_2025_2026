@@ -384,21 +384,29 @@ public class RecepcionistaController {
         });
     }
 
-    private void verMascota(Mascota mascota) {
-        if (mascota == null) { alerta("Selecciona una mascota."); return; }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Datos de la mascota");
-        alert.setHeaderText(mascota.getNombre() + " (ID: " + mascota.getId() + ")");
-        alert.setContentText(
-                "Especie:     " + mascota.getEspecie() + "\n" +
-                "Raza:        " + mascota.getRaza() + "\n" +
-                "Edad:        " + mascota.getEdad() + " años\n" +
-                "ID Cliente:  " + mascota.getIdCliente() + "\n" +
-                "Veterinario: " + mascota.getVeterinario() + "\n" +
-                "En REIAC:    " + (mascota.isEnREIAC() ? "Sí" : "No")
-        );
-        alert.showAndWait();
+    private void verMascota(Mascota mascota){
+        if (mascota == null) {
+            alerta("Selecciona una mascota de la tabla primero.");
+            return;
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            java.sql.Connection con = java.sql.DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/clinica_entornos", "root", ""
+            );
+            java.sql.PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM animales WHERE id_animales = ?"
+            );
+            ps.setInt(1, mascota.getId());
+            java.sql.ResultSet rs = ps.executeQuery();
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error BD: " + e.getMessage());
+        }
     }
 
     private void verificarREIAC(Mascota mascota) {
