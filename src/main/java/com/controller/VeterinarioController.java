@@ -203,6 +203,7 @@ public class VeterinarioController {
     }
 
     // ─── MAIN BODY ─────────────────────────────────────────────────────────────
+    //Todo el cuerpo principal
     private ScrollPane buildMainBody() {
         mainBody = new VBox(20);
         mainBody.setPadding(new Insets(24));
