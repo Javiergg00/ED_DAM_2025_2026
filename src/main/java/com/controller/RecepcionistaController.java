@@ -407,6 +407,19 @@ public class RecepcionistaController {
         } catch (Exception e) {
             System.out.println("Error BD: " + e.getMessage());
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Datos de la mascota");
+        alert.setHeaderText(mascota.getNombre() + " (ID: " + mascota.getId() + ")");
+        alert.setContentText(
+                "Especie:     " + mascota.getEspecie() + "\n" +
+                        "Raza:        " + mascota.getRaza() + "\n" +
+                        "Edad:        " + mascota.getEdad() + " años\n" +
+                        "ID Cliente:  " + mascota.getIdCliente() + "\n" +
+                        "Veterinario: " + mascota.getVeterinario() + "\n" +
+                        "En REIAC:    " + (mascota.isEnREIAC() ? "Sí" : "No")
+        );
+        alert.showAndWait();
     }
 
     private void verificarREIAC(Mascota mascota) {
