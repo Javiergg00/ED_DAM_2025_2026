@@ -53,7 +53,7 @@ public class VeterinarioController {
     }
 
     // ─── HEADER ────────────────────────────────────────────────────────────────
-    //En el va todo el header metido con sus label correspondientes
+    //En el va tdo el header metido con sus label correspondientes
     private HBox buildHeader() {
         // Icono corazón
         StackPane iconBox = new StackPane();
