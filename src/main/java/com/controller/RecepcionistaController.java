@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import com.db.DatabaseConnection;
+
 public class RecepcionistaController {
 
     private final Stage stage;
@@ -150,7 +154,29 @@ public class RecepcionistaController {
         TableColumn<Mascota, Boolean> colREIAC = new TableColumn<>("REIAC");
         colREIAC.setCellValueFactory(new PropertyValueFactory<>("enREIAC"));
 
-        tabla.getColumns().addAll(colId, colNombre, colEspecie, colRaza, colEdad, colCliente, colVet, colREIAC);
+        TableColumn<Mascota, String> colEstado = new TableColumn<>("Estado");
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        TableColumn<Mascota, String> colSintomas = new TableColumn<>("Síntomas");
+        colSintomas.setCellValueFactory(new PropertyValueFactory<>("sintomas"));
+
+        TableColumn<Mascota, String> colReceta = new TableColumn<>("Receta");
+        colReceta.setCellValueFactory(new PropertyValueFactory<>("receta"));
+
+        tabla.getColumns().addAll(
+                colId,
+                colNombre,
+                colEspecie,
+                colRaza,
+                colEdad,
+                colCliente,
+                colVet,
+                colREIAC,
+                colEstado,
+                colSintomas,
+                colReceta
+        );
+
 
         Button btnRegistrar   = boton("➕ Registrar mascota",    "#27ae60");
         Button btnModificar   = boton("✏️ Modificar",             "#2980b9");
@@ -348,11 +374,17 @@ public class RecepcionistaController {
         TextField fEspecie = new TextField(mascota.getEspecie());
         TextField fRaza    = new TextField(mascota.getRaza());
         TextField fEdad    = new TextField(String.valueOf(mascota.getEdad()));
+        TextField fEstado = new TextField(mascota.getEstado());
+        TextField fSintomas = new TextField(mascota.getSintomas());
+        TextField fReceta = new TextField(mascota.getReceta());
 
         grid.addRow(0, new Label("Nombre:"),  fNombre);
         grid.addRow(1, new Label("Especie:"), fEspecie);
         grid.addRow(2, new Label("Raza:"),    fRaza);
         grid.addRow(3, new Label("Edad:"),    fEdad);
+        grid.addRow(4, new Label("Estado:"), fEstado);
+        grid.addRow(5, new Label("Síntomas:"), fSintomas);
+        grid.addRow(6, new Label("Receta:"), fReceta);
 
         dialog.getDialogPane().setContent(grid);
         dialog.setResultConverter(btn -> btn == btnGuardar);
@@ -362,9 +394,15 @@ public class RecepcionistaController {
                 mascota.setNombre(fNombre.getText());
                 mascota.setEspecie(fEspecie.getText());
                 mascota.setRaza(fRaza.getText());
+                mascota.setEstado(fEstado.getText());
+                mascota.setSintomas(fSintomas.getText());
+                mascota.setReceta(fReceta.getText());
                 try { mascota.setEdad(Integer.parseInt(fEdad.getText())); } catch (Exception ignored) {}
                 listaMascotas.set(listaMascotas.indexOf(mascota), mascota);
                 info("Mascota modificada correctamente.");
+
+                actualizarMascotaBD(mascota);
+
             }
         });
     }
@@ -456,5 +494,48 @@ public class RecepcionistaController {
 
     private void info(String mensaje) {
         new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK).showAndWait();
+
+    }
+
+    private void actualizarMascotaBD(Mascota mascota) {
+
+        String sql = """
+    UPDATE mascotas
+    SET nombre = ?,
+        especie = ?,
+        raza = ?,
+        edad = ?,
+        estado = ?,
+        sintomas = ?,
+        receta = ?
+    WHERE id = ?
+""";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, mascota.getNombre());
+            stmt.setString(2, mascota.getEspecie());
+            stmt.setString(3, mascota.getRaza());
+            stmt.setInt(4, mascota.getEdad());
+
+            stmt.setString(5, mascota.getEstado());
+            stmt.setString(6, mascota.getSintomas());
+            stmt.setString(7, mascota.getReceta());
+
+            stmt.setInt(8, mascota.getId());
+
+            int filas = stmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Mascota actualizada en BD");
+            } else {
+                System.out.println("No se encontró la mascota");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta("Error actualizando mascota en BD");
+        }
     }
 }
