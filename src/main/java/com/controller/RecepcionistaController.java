@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import com.dao.MascotaDAO;
 
 import java.util.Optional;
 
