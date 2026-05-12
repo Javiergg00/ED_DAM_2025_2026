@@ -496,7 +496,12 @@ public class RecepcionistaController {
             stmt.setString(2, mascota.getEspecie());
             stmt.setString(3, mascota.getRaza());
             stmt.setInt(4, mascota.getEdad());
-            stmt.setInt(5, mascota.getId());
+
+            stmt.setString(5, mascota.getEstado());
+            stmt.setString(6, mascota.getSintomas());
+            stmt.setString(7, mascota.getReceta());
+
+            stmt.setInt(8, mascota.getId());
 
             int filas = stmt.executeUpdate();
 
