@@ -372,6 +372,9 @@ public class RecepcionistaController {
                 mascota.setNombre(fNombre.getText());
                 mascota.setEspecie(fEspecie.getText());
                 mascota.setRaza(fRaza.getText());
+                mascota.setEstado(fEstado.getText());
+                mascota.setSintomas(fSintomas.getText());
+                mascota.setReceta(fReceta.getText());
                 try { mascota.setEdad(Integer.parseInt(fEdad.getText())); } catch (Exception ignored) {}
                 listaMascotas.set(listaMascotas.indexOf(mascota), mascota);
                 info("Mascota modificada correctamente.");
