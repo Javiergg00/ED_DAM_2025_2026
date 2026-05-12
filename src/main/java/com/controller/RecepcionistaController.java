@@ -347,7 +347,7 @@ public class RecepcionistaController {
                 }
                 int edad = 0;
                 try { edad = Integer.parseInt(fEdad.getText()); } catch (Exception ignored) {}
-                return new Mascota(nextIdMascota++, fNombre.getText(), fEspecie.getText(),
+                return new Mascota(0,fNombre.getText(), fEspecie.getText(),
                         fRaza.getText(), edad, cbCliente.getValue().getId());
             }
             return null;
@@ -357,7 +357,7 @@ public class RecepcionistaController {
 
             MascotaDAO dao = new MascotaDAO();
 
-            boolean insertada = dao.insertarMascota(m);
+           boolean insertada = dao.insertarMascota(m);
 
             if (insertada) {
 

@@ -14,7 +14,6 @@ public class Mascota {
     private boolean enREIAC;
 
     public Mascota(int id, String nombre, String especie, String raza, int edad, int idCliente) {
-        this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.raza = raza;
