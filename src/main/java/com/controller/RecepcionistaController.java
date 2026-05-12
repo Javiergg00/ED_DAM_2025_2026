@@ -163,7 +163,20 @@ public class RecepcionistaController {
         TableColumn<Mascota, String> colReceta = new TableColumn<>("Receta");
         colReceta.setCellValueFactory(new PropertyValueFactory<>("receta"));
 
-        tabla.getColumns().addAll(colId, colNombre, colEspecie, colRaza, colEdad, colCliente, colVet, colREIAC);
+        tabla.getColumns().addAll(
+                colId,
+                colNombre,
+                colEspecie,
+                colRaza,
+                colEdad,
+                colCliente,
+                colVet,
+                colREIAC,
+                colEstado,
+                colSintomas,
+                colReceta
+        );
+
 
         Button btnRegistrar   = boton("➕ Registrar mascota",    "#27ae60");
         Button btnModificar   = boton("✏️ Modificar",             "#2980b9");
