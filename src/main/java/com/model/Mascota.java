@@ -35,6 +35,9 @@ public class Mascota {
     public int getIdCliente() { return idCliente; }
     public String getVeterinario() { return veterinario; }
     public boolean isEnREIAC() { return enREIAC; }
+    public String getEstado() { return estado; }
+    public String getSintomas() { return sintomas; }
+    public String getReceta() { return receta; }
 
     public void setNombre(String nombre) { this.nombre = nombre; }
     public void setEspecie(String especie) { this.especie = especie; }
@@ -42,6 +45,9 @@ public class Mascota {
     public void setEdad(int edad) { this.edad = edad; }
     public void setVeterinario(String veterinario) { this.veterinario = veterinario; }
     public void setEnREIAC(boolean enREIAC) { this.enREIAC = enREIAC; }
+    public void setEstado(String estado) { this.estado = estado; }
+    public void setSintomas(String sintomas) { this.sintomas = sintomas; }
+    public void setReceta(String receta) { this.receta = receta; }
 
     @Override
     public String toString() {
