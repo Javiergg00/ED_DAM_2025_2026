@@ -44,7 +44,7 @@ public class VeterinarioController {
     public Parent getView() {
         return root;
     }
-
+    //Ensambla las tres piezas en el borderpane en el que cada set coloca la seccion en su zona correspondiente
     private void buildView() {
         root.setTop(buildHeader());
         root.setLeft(buildSidebar());
@@ -53,6 +53,7 @@ public class VeterinarioController {
     }
 
     // ─── HEADER ────────────────────────────────────────────────────────────────
+    //En el va tdo el header metido con sus label correspondientes
     private HBox buildHeader() {
         // Icono corazón
         StackPane iconBox = new StackPane();
@@ -62,8 +63,8 @@ public class VeterinarioController {
         Label heartIcon = new Label("♥");
         heartIcon.setStyle("-fx-text-fill: #2563eb; -fx-font-size: 20;");
         iconBox.getChildren().add(heartIcon);
-
-        Label title = new Label("Sistema Clínica Veterinaria");
+        //Nombre de la app
+        Label title = new Label("VerCare");
         title.setFont(Font.font("Segoe UI", FontWeight.BOLD, 18));
         title.setStyle("-fx-text-fill: #111827;");
         Label subtitle = new Label("Dr. jht");
@@ -93,6 +94,7 @@ public class VeterinarioController {
     }
 
     // ─── SIDEBAR ───────────────────────────────────────────────────────────────
+    //Barra lateral
     private VBox buildSidebar() {
         VBox sidebar = new VBox(4);
         sidebar.setPadding(new Insets(20, 12, 20, 12));
