@@ -360,6 +360,9 @@ public class RecepcionistaController {
         grid.addRow(1, new Label("Especie:"), fEspecie);
         grid.addRow(2, new Label("Raza:"),    fRaza);
         grid.addRow(3, new Label("Edad:"),    fEdad);
+        grid.addRow(4, new Label("Estado:"), fEstado);
+        grid.addRow(5, new Label("Síntomas:"), fSintomas);
+        grid.addRow(6, new Label("Receta:"), fReceta);
 
         dialog.getDialogPane().setContent(grid);
         dialog.setResultConverter(btn -> btn == btnGuardar);
