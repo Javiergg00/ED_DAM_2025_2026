@@ -1,5 +1,4 @@
 package com.controller;
-import com.dao.MascotaDAO;
 import com.clinicaVeterinaria.AppNavigator;
 import com.model.Cliente;
 import com.model.Mascota;
