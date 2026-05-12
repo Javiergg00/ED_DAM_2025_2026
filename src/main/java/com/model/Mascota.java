@@ -22,6 +22,9 @@ public class Mascota {
         this.idCliente = idCliente;
         this.veterinario = "Sin asignar";
         this.enREIAC = false;
+        this.estado = "";
+        this.sintomas = "";
+        this.receta = "";
     }
 
     public int getId() { return id; }
