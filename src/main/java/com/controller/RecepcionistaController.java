@@ -478,13 +478,16 @@ public class RecepcionistaController {
     private void actualizarMascotaBD(Mascota mascota) {
 
         String sql = """
-        UPDATE mascotas
-        SET nombre = ?,
-            especie = ?,
-            raza = ?,
-            edad = ?
-        WHERE id = ?
-    """;
+    UPDATE mascotas
+    SET nombre = ?,
+        especie = ?,
+        raza = ?,
+        edad = ?,
+        estado = ?,
+        sintomas = ?,
+        receta = ?
+    WHERE id = ?
+""";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
