@@ -22,19 +22,18 @@ public class ClienteController {
     private final SessionUser sessionUser;
     private final BorderPane root;
 
-    // ── Datos de ejemplo — sustituir por consulta a BD cuando esté lista ──
-    // SELECT * FROM mascotas WHERE idCliente = ID_CLIENTE_SESION
-    private final List<Mascota> todasLasMascotas = new ArrayList<>(List.of(
+
+    private final List<Mascota> todasLasMascotas = new ArrayList<>(List.of(  //Datos animales de ejemplo
             new Mascota(1, "Max", "Perro", "Golden Retriever", 5, 1),
             new Mascota(2, "Luna", "Gato", "Siamés", 3, 1),
             new Mascota(3, "Rocky", "Perro", "Bulldog", 7, 1)
     ));
 
-    // ID del cliente logueado — simulado a 1 hasta conectar con BD
+
     private static final int ID_CLIENTE_SESION = 1;
 
-    // Datos del cliente logueado — sustituir por SELECT WHERE id = ID_CLIENTE_SESION
-    private final Cliente clienteActual = new Cliente(
+
+    private final Cliente clienteActual = new Cliente( //Datos del Cliente de ejemplo
             ID_CLIENTE_SESION,
             "Juan", "Pérez",
             "612345678",
@@ -64,6 +63,7 @@ public class ClienteController {
         return root;
     }
 
+    //Vistas
     private void buildView() {
         root.setTop(buildHeader());
         root.setLeft(buildSidebar());
@@ -71,6 +71,7 @@ public class ClienteController {
         root.setStyle("-fx-background-color: #fbfaf5;");
     }
 
+    //Vista cabecera
     private HBox buildHeader() {
         Label title = new Label("Portal del Cliente");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 22));
@@ -98,11 +99,13 @@ public class ClienteController {
         );
         return header;
     }
+
+    //Vistas pantalla citas
     private VBox buildPanelCitas() {
         Label titulo = sectionTitle("📅 Mis Citas");
 
         VBox lista = new VBox(12);
-        lista.getChildren().addAll(
+        lista.getChildren().addAll( //Citas de ejemplo
                 buildCardCita("Consulta General",       "2026-04-18", "completada", "Dr. García",    "50,00 €", "pagado"),
                 buildCardCita("Análisis Laboratorio",   "2026-04-19", "en_proceso", "Dr. Rodríguez", "85,00 €", "pendiente"),
                 buildCardCita("Consulta Especializada", "2026-04-20", "pendiente",  "Dr. Martínez",  "120,00 €","pendiente")
@@ -114,7 +117,6 @@ public class ClienteController {
                         "-fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"
         );
         btnNueva.setOnAction(e ->
-                // TODO: abrir formulario de solicitud de cita (INSERT en BD)
                 new Alert(Alert.AlertType.INFORMATION,
                         "Solicitud de cita próximamente disponible.",
                         ButtonType.OK).showAndWait()
@@ -129,6 +131,7 @@ public class ClienteController {
         return panel;
     }
 
+    //Vistas de las cajas de cita
     private VBox buildCardCita(String titulo, String fecha, String estado,
                                String profesional, String monto, String pago) {
         Label tituloLbl = bold(titulo, 14);
@@ -159,6 +162,7 @@ public class ClienteController {
         return card;
     }
 
+    //Vista datos del cliente
     private VBox buildPanelDatos() {
         Label titulo = sectionTitle("👤 Mis Datos Personales");
 
@@ -186,6 +190,7 @@ public class ClienteController {
         return panel;
     }
 
+    //Vista de la fila de los datos de la anterior clase
     private void addFilaDatos(GridPane grid, String etiqueta, String valor, int fila) {
         Label lbl = new Label(etiqueta);
         lbl.setFont(Font.font("Arial", FontWeight.BOLD, 13));
@@ -198,8 +203,8 @@ public class ClienteController {
         grid.add(val, 1, fila);
     }
 
+    //Vista panel editar datos
     private void abrirDialogoEdicion() {
-        // TODO: conectar con UPDATE usuarios SET ... WHERE id = ID_CLIENTE_SESION
         TextField fNombre    = new TextField(clienteActual.getNombre());
         TextField fApellido  = new TextField(clienteActual.getApellido());
         TextField fTelefono  = new TextField(clienteActual.getTelefono());
@@ -222,7 +227,6 @@ public class ClienteController {
 
         dlg.showAndWait().ifPresent(bt -> {
             if (bt == ButtonType.OK) {
-                // Actualizar objeto en memoria (y BD cuando esté conectada)
                 clienteActual.setNombre(fNombre.getText().trim());
                 clienteActual.setApellido(fApellido.getText().trim());
                 clienteActual.setTelefono(fTelefono.getText().trim());
@@ -237,6 +241,8 @@ public class ClienteController {
             }
         });
     }
+
+    //Estetica
 
     private void addFilaForm(GridPane grid, String label, TextField field, int fila) {
         grid.add(new Label(label), 0, fila);
@@ -302,9 +308,8 @@ public class ClienteController {
         if (s == null || s.isEmpty()) return s;
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
-    // ─────────────────────────────────────────────
-    // BARRA LATERAL
-    // ─────────────────────────────────────────────
+
+    //Barra de la izquierda
 
     private VBox buildSidebar() {
         btnMascotas = sidebarButton("🐾  Mis Mascotas", "mascotas");
@@ -321,6 +326,8 @@ public class ClienteController {
         return sidebar;
     }
 
+    //Configuracion default de los botones ya usados en la barra
+
     private Button sidebarButton(String texto, String seccion) {
         Button btn = new Button(texto);
         btn.setMaxWidth(Double.MAX_VALUE);
@@ -330,6 +337,8 @@ public class ClienteController {
         btn.setOnAction(e -> mostrarSeccion(seccion));
         return btn;
     }
+
+    //Estilos activo y inactivo
 
     private void styleActivo(Button btn) {
         btn.setStyle(
@@ -347,9 +356,7 @@ public class ClienteController {
         );
     }
 
-    // ─────────────────────────────────────────────
-    // CONTENIDO CENTRAL
-    // ─────────────────────────────────────────────
+    //Junta los botones  con los paneles respectivos
 
     private StackPane buildContent() {
         panelMascotas = buildPanelMascotas();
@@ -380,11 +387,7 @@ public class ClienteController {
         }
     }
 
-    // ─────────────────────────────────────────────
-    // PANEL: MIS MASCOTAS
-    // Filtra por idCliente == ID_CLIENTE_SESION
-    // TODO: reemplazar lista estática por consulta JDBC a tabla mascotas
-    // ─────────────────────────────────────────────
+    //Contruccion panel mascotas
 
     private VBox buildPanelMascotas() {
         Label titulo = sectionTitle("🐾 Mis Mascotas");
@@ -410,6 +413,8 @@ public class ClienteController {
         panel.setManaged(false);
         return panel;
     }
+
+    //Vista de las cajas de cada mascota
 
     private VBox buildCardMascota(Mascota m) {
         Label nombre  = bold(m.getNombre(), 15);
