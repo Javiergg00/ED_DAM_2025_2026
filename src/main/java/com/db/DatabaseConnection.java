@@ -1,10 +1,10 @@
-package com.controller;
+package com.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class MascotaDau {
+public class DatabaseConnection {
 
 
         private static final String URL =
