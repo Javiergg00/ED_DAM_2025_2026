@@ -352,6 +352,9 @@ public class RecepcionistaController {
         TextField fEspecie = new TextField(mascota.getEspecie());
         TextField fRaza    = new TextField(mascota.getRaza());
         TextField fEdad    = new TextField(String.valueOf(mascota.getEdad()));
+        TextField fEstado = new TextField(mascota.getEstado());
+        TextField fSintomas = new TextField(mascota.getSintomas());
+        TextField fReceta = new TextField(mascota.getReceta());
 
         grid.addRow(0, new Label("Nombre:"),  fNombre);
         grid.addRow(1, new Label("Especie:"), fEspecie);
