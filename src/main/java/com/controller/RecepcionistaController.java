@@ -18,7 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Optional;
-
+// Clase controladora principal de la vista recepcionista
 public class RecepcionistaController {
 
     private final Stage stage;
@@ -31,12 +31,19 @@ public class RecepcionistaController {
     private int nextIdCliente = 1;
     private int nextIdMascota = 1;
 
+    // Constructor del controlador
     public RecepcionistaController(Stage stage, AppNavigator navigator, SessionUser sessionUser) {
+        // Guarda la referencia de la ventana principal
         this.stage = stage;
+        // Guarda el navegador de pantallas
         this.navigator = navigator;
+        // Guarda el usuario actual
         this.sessionUser = sessionUser;
+        // Crea el panel principal tipo BorderPane
         root = new BorderPane();
+        // Cambia el color de fondo general
         root.setStyle("-fx-background-color: #f0f4f8;");
+        // Construye toda la interfaz gráfica
         construirVista();
     }
 
@@ -72,7 +79,9 @@ public class RecepcionistaController {
 
         tabPane.getTabs().addAll(tabClientes, tabMascotas);
 
+        // Coloca el header arriba
         root.setTop(header);
+        // Coloca las pestañas en el centro
         root.setCenter(tabPane);
     }
 
